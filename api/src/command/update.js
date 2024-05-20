@@ -62,7 +62,6 @@ module.exports.handler = async (event) => {
       body: JSON.stringify(commandUpdate)
     }
   } catch (error) {
-    console.log(error)
     return {
       statusCode: 400,
       body: JSON.stringify({ message: 'Error getting command' })

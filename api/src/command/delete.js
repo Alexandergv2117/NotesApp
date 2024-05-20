@@ -37,7 +37,6 @@ module.exports.handler = async (event) => {
       body: JSON.stringify({ message: 'Command deleted' })
     }
   } catch (error) {
-    console.error(error)
     return {
       statusCode: 400,
       body: JSON.stringify({ message: 'Error deleting command' })
