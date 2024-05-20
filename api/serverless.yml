@@ -48,6 +48,24 @@ functions:
       - httpApi:
           path: /command
           method: get
+  getCommandById:
+    handler: src/command/getById.handler
+    events:
+      - httpApi:
+          path: /command/{id}
+          method: get
+  updateCommand:
+    handler: src/command/update.handler
+    events:
+      - httpApi:
+          path: /command/{id}
+          method: put
+  deleteCommand:
+    handler: src/command/delete.handler
+    events:
+      - httpApi:
+          path: /command/{id}
+          method: delete
 
 resources:
   Resources:

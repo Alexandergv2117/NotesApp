@@ -1,8 +1,7 @@
-/* eslint-disable quotes */
-const { v4 } = require("uuid")
-const AWS = require("aws-sdk")
+const { v4 } = require('uuid')
+const AWS = require('aws-sdk')
 
-const { TABLES_NAMES } = require("../constants/tablesName")
+const { TABLES_NAMES } = require('../constants/tablesName')
 
 module.exports.handler = async (event) => {
   const dynamodb = new AWS.DynamoDB.DocumentClient()
@@ -13,7 +12,7 @@ module.exports.handler = async (event) => {
   if (!title || !command || !description || !tag) {
     return {
       statusCode: 400,
-      body: JSON.stringify({ message: "Missing required fields" })
+      body: JSON.stringify({ message: 'Missing required fields' })
     }
   }
 
@@ -39,7 +38,7 @@ module.exports.handler = async (event) => {
   } catch (error) {
     return {
       statusCode: 400,
-      body: JSON.stringify({ message: "Error creating command" })
+      body: JSON.stringify({ message: 'Error creating command' })
     }
   }
 }
