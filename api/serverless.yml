@@ -1,4 +1,4 @@
-service: notes-app-api
+service: notes-app
 frameworkVersion: '3'
 
 provider:
@@ -6,10 +6,59 @@ provider:
   runtime: nodejs18.x
   region: us-east-1
 
+  iam:
+    role:
+      statements:
+        - Effect: "Allow"
+          Action:
+            - dynamodb:Query
+            - dynamodb:Scan
+            - dynamodb:GetItem
+            - dynamodb:PutItem
+            - dynamodb:UpdateItem
+            - dynamodb:DeleteItem
+          Resource:
+            - "arn:aws:dynamodb:${self:provider.region}:${aws:accountId}:table/CommandTable"
+
+plugins:
+  - serverless-offline
+
+custom:
+  serverless-offline:
+    stage:
+      - dev
+    httpPort: 5001
+
 functions:
   api:
-    handler: index.handler
+    handler: src/index.handler
     events:
       - httpApi:
           path: /
           method: get
+  createCommand:
+    handler: src/command/create.handler
+    events:
+      - httpApi:
+          path: /command
+          method: post
+  getCommand:
+    handler: src/command/get.handler
+    events:
+      - httpApi:
+          path: /command
+          method: get
+
+resources:
+  Resources:
+    CommandTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: CommandTable
+        BillingMode: PAY_PER_REQUEST
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
