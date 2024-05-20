@@ -1,0 +1,82 @@
+service: notes-app
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+  region: us-east-1
+
+  iam:
+    role:
+      statements:
+        - Effect: "Allow"
+          Action:
+            - dynamodb:Query
+            - dynamodb:Scan
+            - dynamodb:GetItem
+            - dynamodb:PutItem
+            - dynamodb:UpdateItem
+            - dynamodb:DeleteItem
+          Resource:
+            - "arn:aws:dynamodb:${self:provider.region}:${aws:accountId}:table/CommandTable"
+
+plugins:
+  - serverless-offline
+
+custom:
+  serverless-offline:
+    stage:
+      - dev
+    httpPort: 5001
+
+functions:
+  api:
+    handler: src/index.handler
+    events:
+      - httpApi:
+          path: /
+          method: get
+  createCommand:
+    handler: src/command/create.handler
+    events:
+      - httpApi:
+          path: /command
+          method: post
+  getCommand:
+    handler: src/command/get.handler
+    events:
+      - httpApi:
+          path: /command
+          method: get
+  getCommandById:
+    handler: src/command/getById.handler
+    events:
+      - httpApi:
+          path: /command/{id}
+          method: get
+  updateCommand:
+    handler: src/command/update.handler
+    events:
+      - httpApi:
+          path: /command/{id}
+          method: put
+  deleteCommand:
+    handler: src/command/delete.handler
+    events:
+      - httpApi:
+          path: /command/{id}
+          method: delete
+
+resources:
+  Resources:
+    CommandTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: CommandTable
+        BillingMode: PAY_PER_REQUEST
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S

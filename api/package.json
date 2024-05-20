@@ -1,0 +1,20 @@
+{
+  "scripts": {
+    "deploy:dev": "sls deploy --verbose --stage dev",
+    "deploy:prod": "sls deploy --verbose --stage prod",
+    "remove:prod": "sls remove --verbose --stage prod",
+    "remove:dev": "sls remove --verbose --stage dev",
+    "dev": "nodemon --exec 'sls offline start --stage dev'"
+  },
+  "devDependencies": {
+    "nodemon": "3.1.0",
+    "serverless-offline": "13.5.1"
+  },
+  "dependencies": {
+    "aws-sdk": "2.1623.0",
+    "uuid": "9.0.1"
+  },
+  "eslintConfig": {
+    "extends": "./node_modules/standard/eslintrc.json"
+  }
+}
