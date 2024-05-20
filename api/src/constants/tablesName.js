@@ -1,7 +1,7 @@
 const TABLES_NAMES = {
-  COMMAND: 'CommandTable',
-};
+  COMMAND: 'CommandTable'
+}
 
 module.exports = {
-  TABLES_NAMES,
-};
+  TABLES_NAMES
+}

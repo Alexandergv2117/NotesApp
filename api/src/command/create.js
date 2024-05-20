@@ -1,19 +1,20 @@
-const { v4 } = require("uuid");
-const AWS = require("aws-sdk");
+/* eslint-disable quotes */
+const { v4 } = require("uuid")
+const AWS = require("aws-sdk")
 
-const { TABLES_NAMES } = require("../constants/tablesName");
+const { TABLES_NAMES } = require("../constants/tablesName")
 
 module.exports.handler = async (event) => {
-  const dynamodb = new AWS.DynamoDB.DocumentClient();
-  const requestBody = event.body ? JSON.parse(event.body) : {};
+  const dynamodb = new AWS.DynamoDB.DocumentClient()
+  const requestBody = event.body ? JSON.parse(event.body) : {}
 
-  const { title = '', command = '', description = '', tag = '' } = requestBody;
+  const { title = '', command = '', description = '', tag = '' } = requestBody
 
   if (!title || !command || !description || !tag) {
     return {
       statusCode: 400,
-      body: JSON.stringify({ message: "Missing required fields" }),
-    };
+      body: JSON.stringify({ message: "Missing required fields" })
+    }
   }
 
   const newCommand = {
@@ -22,24 +23,23 @@ module.exports.handler = async (event) => {
     command,
     description,
     tag,
-    createdAt: new Date().toISOString(),
-  };
+    createdAt: new Date().toISOString()
+  }
 
   try {
     await dynamodb.put({
       TableName: TABLES_NAMES.COMMAND,
-      Item: newCommand,
-    }).promise();
-  
-  
+      Item: newCommand
+    }).promise()
+
     return {
       statusCode: 200,
-      body: JSON.stringify(newCommand),
-    };
+      body: JSON.stringify(newCommand)
+    }
   } catch (error) {
     return {
       statusCode: 400,
-      body: JSON.stringify({ message: "Error creating command" }),
-    };
+      body: JSON.stringify({ message: "Error creating command" })
+    }
   }
-};
+}
