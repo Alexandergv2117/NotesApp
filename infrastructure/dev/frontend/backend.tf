@@ -51,3 +51,7 @@ resource "aws_s3_bucket_policy" "bucket-policy" {
     ]
   })
 }
+
+output "url" {
+  value = "http://${aws_s3_bucket.notes_app_bucket.bucket}.s3-website-${var.region}.amazonaws.com"
+}
