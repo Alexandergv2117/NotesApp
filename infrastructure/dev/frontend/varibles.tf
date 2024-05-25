@@ -17,3 +17,19 @@ variable "bucket_name" {
   type = string
   description = "S3 bucket name"
 }
+
+variable "role_name" {
+  default = "github-actions-role-notes-app-dev"
+  type = string
+  description = "IAM role name"
+}
+
+variable "repo_owner" {
+  type = string
+  description = "GitHub repository owner"
+}
+
+variable "repo_name" {
+  type = string
+  description = "GitHub repository name"  
+}
