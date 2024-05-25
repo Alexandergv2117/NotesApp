@@ -5,8 +5,10 @@ const Layout = () => {
   return (
     <div>
       <Navbar />
-      <main>
-        <Outlet />
+      <main className='flex flex-col items-center justify-center'>
+        <div className='w-full max-w-5xl p-4'>
+          <Outlet />
+        </div>
       </main>
     </div>
   );
