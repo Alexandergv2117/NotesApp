@@ -1,13 +1,14 @@
-import { Navbar, NavbarBrand } from "@nextui-org/react";
-import { AcmeLogo } from "./components/icons/AcmedLogo"
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Layout from "./layout";
 
 export default function App() {
   return (
-    <Navbar isBordered>
-      <NavbarBrand>
-        <AcmeLogo />
-        <button className="font-bold text-inherit">ACME</button>
-      </NavbarBrand>
-    </Navbar>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Layout />} >
+          <Route index element={<h1>Hola</h1>} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
   );
 }
