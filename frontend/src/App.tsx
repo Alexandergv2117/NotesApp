@@ -1,14 +1,13 @@
-import './App.css'
+import { Navbar, NavbarBrand } from "@nextui-org/react";
+import { AcmeLogo } from "./components/icons/AcmedLogo"
 
-function App() {
-
+export default function App() {
   return (
-    <main className='flex justify-center'>
-      <div>
-        <h1 className='font-bold text-4xl'>Notes APP</h1>
-      </div>
-    </main>
-  )
+    <Navbar isBordered>
+      <NavbarBrand>
+        <AcmeLogo />
+        <button className="font-bold text-inherit">ACME</button>
+      </NavbarBrand>
+    </Navbar>
+  );
 }
-
-export default App
