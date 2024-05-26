@@ -13,6 +13,12 @@ variable "region" {
   description = "AWS region"
 }
 
+variable "role_name" {
+  type = string
+  description = "Role name"
+  default = "dynamodb-role-lambda-notes-app"
+}
+
 variable "tables_names" {
   type = list(string)
   description = "List of tables names"
