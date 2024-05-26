@@ -2,7 +2,7 @@ import { Button, useDisclosure } from "@nextui-org/react";
 import CreateCommand from "../components/create-command/create-command";
 
 export default function Home() {
-  const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
   return (
     <div className="relative">
       <h1 className="text-4xl font-bold">Welcome to ACME</h1>
@@ -12,7 +12,7 @@ export default function Home() {
         Crear comando
       </Button>
 
-      <CreateCommand isOpen={isOpen} onOpen={onOpen} onOpenChange={onOpenChange}/>
+      <CreateCommand isOpen={isOpen} onOpen={onOpen} onOpenChange={onOpenChange} onClose={onClose}/>
     </div>
   );
 }

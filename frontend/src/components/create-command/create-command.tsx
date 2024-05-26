@@ -1,53 +1,90 @@
+import { useForm } from "react-hook-form";
 import {
   Modal,
-  ModalContent, 
-  ModalHeader, 
-  ModalBody, 
-  ModalFooter, 
-  Button 
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  Button,
+  Input,
 } from "@nextui-org/react";
+
+import useFetch from "../../hooks/useFetch";
 
 interface CreateCommandProps {
   isOpen: boolean;
   onOpen: () => void;
   onOpenChange: () => void;
+  onClose: () => void;
 }
 
-export default function CreateCommand({isOpen ,onOpenChange }: CreateCommandProps) {
+export default function CreateCommand({
+  isOpen,
+  onOpenChange,
+}: CreateCommandProps) {
+  const { fetchData } = useFetch();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
+  const onSubmit = handleSubmit(async ({ title, description, command }) => {
+
+    const { data, message} = await fetchData({
+      url: "command",
+      method: "POST",
+      body: { title, description, command },
+    });
+
+    console.log(data, message);
+
+    onOpenChange();
+  });
+
   return (
     <>
       <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
         <ModalContent>
           {(onClose) => (
             <>
-              <ModalHeader className="flex flex-col gap-1 font-bold text-2xl">Crear un nuevo comando</ModalHeader>
+              <ModalHeader className="flex flex-col gap-1 font-bold text-2xl">
+                <h2>Crear comando</h2>
+              </ModalHeader>
               <ModalBody>
-                <p> 
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  Nullam pulvinar risus non risus hendrerit venenatis.
-                  Pellentesque sit amet hendrerit risus, sed porttitor quam.
-                </p>
-                <p>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  Nullam pulvinar risus non risus hendrerit venenatis.
-                  Pellentesque sit amet hendrerit risus, sed porttitor quam.
-                </p>
-                <p>
-                  Magna exercitation reprehenderit magna aute tempor cupidatat consequat elit
-                  dolor adipisicing. Mollit dolor eiusmod sunt ex incididunt cillum quis. 
-                  Velit duis sit officia eiusmod Lorem aliqua enim laboris do dolor eiusmod. 
-                  Et mollit incididunt nisi consectetur esse laborum eiusmod pariatur 
-                  proident Lorem eiusmod et. Culpa deserunt nostrud ad veniam.
-                </p>
+                <form onSubmit={onSubmit}>
+                  <section className="space-y-4">
+                    <Input
+                      type="text"
+                      label="Titulo"
+                      isInvalid={!!errors.title}
+                      errorMessage="Este campo es requerido"
+                      {...register("title", { required: true })}
+                    />
+                    <Input
+                      type="text"
+                      label="Descripción"
+                      isInvalid={!!errors.description}
+                      errorMessage="Este campo es requerido"
+                      {...register("description", { required: true })}
+                    />
+                    <Input
+                      type="text"
+                      label="Comando"
+                      isInvalid={!!errors.command}
+                      errorMessage="Este campo es requerido"
+                      {...register("command", { required: true })}
+                    />
+                  </section>
+                  <section className="w-full flex flex-row justify-end space-x-2">
+                    <Button color="danger" variant="light" onPress={onClose}>
+                      Cerrar
+                    </Button>
+                    <Button color="primary" type="submit">
+                      Crear
+                    </Button>
+                  </section>
+                </form>
               </ModalBody>
-              <ModalFooter>
-                <Button color="danger" variant="light" onPress={onClose}>
-                  Close
-                </Button>
-                <Button color="primary" onPress={onClose}>
-                  Action
-                </Button>
-              </ModalFooter>
             </>
           )}
         </ModalContent>
