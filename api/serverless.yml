@@ -19,6 +19,9 @@ provider:
             - dynamodb:DeleteItem
           Resource:
             - "arn:aws:dynamodb:${self:provider.region}:${aws:accountId}:table/CommandTable"
+  
+  httpApi:
+    cors: true
 
 plugins:
   - serverless-offline
