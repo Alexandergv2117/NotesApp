@@ -1,14 +1,16 @@
-import './App.css'
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 
-function App() {
+import Layout from "./layout";
+import Home from "./pages/home";
 
+export default function App() {
   return (
-    <main className='flex justify-center'>
-      <div>
-        <h1 className='font-bold text-4xl'>Notes APP</h1>
-      </div>
-    </main>
-  )
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Layout />} >
+          <Route index element={<Home />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
+  );
 }
-
-export default App

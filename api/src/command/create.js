@@ -7,9 +7,9 @@ module.exports.handler = async (event) => {
   const dynamodb = new AWS.DynamoDB.DocumentClient()
   const requestBody = event.body ? JSON.parse(event.body) : {}
 
-  const { title = '', command = '', description = '', tag = '' } = requestBody
+  const { title = '', command = '', description = '' } = requestBody
 
-  if (!title || !command || !description || !tag) {
+  if (!title || !command || !description) {
     return {
       statusCode: 400,
       body: JSON.stringify({ message: 'Missing required fields' })
@@ -21,7 +21,6 @@ module.exports.handler = async (event) => {
     title,
     command,
     description,
-    tag,
     createdAt: new Date().toISOString()
   }
 

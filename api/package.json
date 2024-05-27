@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "aws-sdk": "2.1623.0",
+    "serverless-dotenv-plugin": "6.0.0",
     "uuid": "9.0.1"
   },
   "eslintConfig": {
